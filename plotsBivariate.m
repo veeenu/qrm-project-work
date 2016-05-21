@@ -12,7 +12,6 @@ for i = 1:length(smpSize)
   
   dataA = rand(smpSize(i), 1);
   dataB = LCG(smpSize(i));
-  %dataC = FIBG(smpSize(i));
   dataC = norminv(dataB, 0.5, 0.5);
   
   a = subp(ii * COLS + 1);
@@ -22,10 +21,6 @@ for i = 1:length(smpSize)
   b = subp(ii * COLS + 2);
   histogram(dataB, 10);
   title(b, sprintf('LCG, 10^{%d} samples', log10(smpSize(i))));
-  
-  %c = subp(ii * COLS + 3);
-  %histogram(dataC, 10);
-  %title(c, sprintf('Fibonacci, %d samples', smpSize(i)));
   
   c = subp(ii * COLS + 3);
   histogram(dataC, 50);
