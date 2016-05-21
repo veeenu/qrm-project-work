@@ -1,0 +1,121 @@
+\documentclass[10pt, compress]{beamer}
+
+\usetheme{m}
+
+\usepackage{booktabs}
+\usepackage[scale=2]{ccicons}
+\usepackage{minted}
+
+\usemintedstyle{pastie}
+
+\title{Random number generation}
+\subtitle{Quantitative Risk Management project work}
+\date{}
+\author{Silvia Baldisserotto, Maysa Jahanbani, \\ Claudia Pesci, Phan Ho Tan Phat, \\ Andrea Venuta}
+\institute{Università degli Studi di Firenze - Finance and Risk Management}
+
+\renewcommand{\theFancyVerbLine}{\sffamily \textcolor[rgb]{0.5,0.5,0.5}{\small \oldstylenums{\arabic{FancyVerbLine}}}}
+
+\begin{document}
+
+\maketitle
+
+\begin{frame}[fragile]
+	\frametitle{Implementations - Linear Congruential Generator}
+	\begin{columns}[t]
+		\begin{column}{5cm}
+	
+			\begin{minted}[fontsize=\small,linenos]{matlab}
+function [ rn ] = LCG( x ) 
+
+  if(nargin == 0)
+    x = 1;
+  end
+  
+  rn = zeros(x,1);
+  
+  for i = 1:x
+    rn(i) = LCGstep();
+  end
+
+end
+			\end{minted}
+		\end{column}
+		\begin{column}{5cm}
+			\begin{minted}[fontsize=\small,linenos,firstnumber=14]{matlab}
+function [ rnStep ] = LCGstep()
+
+  persistent seed;
+  M = 244944;
+  a = 1597;
+  b = 51749;
+  
+  if(isempty(seed))
+    seed = 0;
+  end
+  
+  seed = mod(seed * a + b, M);
+  
+  rnStep = seed / M;
+
+end
+			\end{minted}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Implementations - Box-Muller method}
+	\begin{minted}[fontsize=\small,linenos]{matlab}
+function [ Z ] = BoxMuller( x )
+
+  if(nargin == 0)
+    x = 1;
+  end
+
+  U = rand(x, 2);
+  
+  theta = 2 .* pi .* U(:, 2);
+  rho   = sqrt( -2 .* log( U(:, 1) ) );
+  
+  Z = [ rho .* cos(theta), rho .* sin(theta) ];
+
+end
+	\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Implementations - Marsaglia polar algorithm}
+	\begin{minted}[fontsize=\small,linenos]{matlab}
+function [ Z ] = Marsaglia( x )
+
+  if(nargin == 0)
+    x = 1;
+  end
+
+  Z = zeros(x,2);
+  
+  for i = 1 : x
+    W = 1;  V = [ 1, 1 ];
+    while not (W < 1)
+      V = 2 * rand(1, 2) - 1;
+      W = V(1) .^ 2 + V(2) .^ 2;
+    end
+    
+    Z(i, :) = V .* sqrt(-2 * log(W) / W);
+  end
+end
+	\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Plots - Univariate methods}
+	\includegraphics[width=\textwidth, trim=70mm 80mm 70mm 20mm]{../univariate.eps}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Plots - Bivariate methods}
+	\includegraphics[width=\textwidth, trim=70mm 80mm 70mm 20mm]{../bivariate.eps}
+\end{frame}
+
+\end{document}

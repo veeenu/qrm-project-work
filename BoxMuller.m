@@ -1,13 +1,14 @@
-function [ Z1, Z2 ] = BoxMuller( x )
+function [ Z ] = BoxMuller( x )
 
-  U  = LCG(x);
-  U1 = U(1:2:x);
-  U2 = U(2:2:x);
+  if(nargin == 0)
+    x = 1;
+  end
+
+  U = rand(x, 2);
   
-  theta = 2 * pi * U2;
-  rho   = sqrt(-2 * log(U1));
+  theta = 2 .* pi .* U(:, 2);
+  rho   = sqrt( -2 .* log(U(:, 1)) );
   
-  Z1 = rho .* cos(theta);
-  Z2 = rho .* sin(theta);
+  Z = [ rho .* cos(theta), rho .* sin(theta) ];
 
 end
