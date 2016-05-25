@@ -21,6 +21,68 @@
 \maketitle
 
 \begin{frame}[fragile]
+  \frametitle{Random numbers}
+  \begin{itemize}
+  	\item Computer-generated numbers are \textit{pseudo-random}: deterministic and predictable
+  	\item \textit{Quasi-random} numbers prevent potential lack of equidistributedness
+  	\item \textbf{Definition.} \textit{(sample)} a sequence of number is called a \textit{sample from the distribution $F$}
+  	  if the numbers are independent realizations of a random variable with distribution function $F$
+	\item Uniform deviates: samples from $\sim \mathcal{U}  \left[ 0, 1 \right] $
+	\item Normal deviates: samples from $\sim \mathcal{N}  \left( 0, 1 \right) $
+	\item Drawing uniform deviates is the basis of random number generation
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Linear congruential generators}
+  	\begin{itemize}
+  	  \item $N_0$ is chosen arbitrarily
+  	  \item $N_i = (aN_{i-1} + b)\ \text{mod}\ M$ for $i > 0$
+  	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Quality of generators}
+  Requirements:
+  \begin{enumerate}
+  	\item Large period: small set of numbers makes the outcome easier to predict (choose M as large as possible)
+  	\item Statistical tests to verify that the distribution is the intended one
+  	  \begin{itemize}
+  	  	\item Comparison of sample mean and variance $\mu,\ \sigma^2$ with desired values
+  	  	\item Correlation between sample values
+  	  	\item Quality of approximation of the distribution
+  	  \end{itemize}
+     \item Distribution in higher dimensional spaces: lattice structure
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Random vectors and lattice structure}
+  \begin{itemize}
+  	\item Sequences of random numbers can be arranged in $m$-dimensional vectors
+  	\item The vectors lie on a number of parallel $(m-1)$-dimensional hyperplanes
+  	\item The ideal condition is that the number of parallel hyperplanes is maximized:
+  	  number of hyperplanes is a measure of equidistributedness
+  	\item Family of parallel lines in the $(U_{i-1},U_i)$-plane \[
+  		z_0 U_{i-1} +z_1 U_i = c + \frac{z_1 b}{M} \quad \text{where} \quad c := N_{i-1}\frac{z_0 + az_1}{M} - z_1 k
+  	  \] for each tuple $(z_0,z_1)$ and for all $c$s.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Random vectors and lattice structure}
+  immagini qui
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Inversion and transformation methods}
+  \begin{itemize}
+  	\item Inversion and transformation methods generate numbers distributed according to
+  	  an arbitrary distribution from uniformly distributed samples
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
 	\frametitle{Implementations - Linear Congruential Generator}
 	\begin{columns}[t]
 		\begin{column}{5cm}

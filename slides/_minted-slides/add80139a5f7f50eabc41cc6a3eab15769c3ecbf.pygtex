@@ -1,0 +1,18 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{function}\PYG{+w}{ }[ rnStep ] \PYG{p}{=}\PYG{+w}{ }\PYG{n+nf}{LCGstep}\PYG{p}{()}
+
+\PYG{+w}{  }\PYG{k}{persistent} \PYG{n}{seed}\PYG{p}{;}
+  \PYG{n}{M} \PYG{p}{=} \PYG{l+m+mi}{244944}\PYG{p}{;}
+  \PYG{n}{a} \PYG{p}{=} \PYG{l+m+mi}{1597}\PYG{p}{;}
+  \PYG{n}{b} \PYG{p}{=} \PYG{l+m+mi}{51749}\PYG{p}{;}
+
+  \PYG{k}{if}\PYG{p}{(}\PYG{n+nb}{isempty}\PYG{p}{(}\PYG{n}{seed}\PYG{p}{))}
+    \PYG{n}{seed} \PYG{p}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+  \PYG{k}{end}
+
+  \PYG{n}{seed} \PYG{p}{=} \PYG{n+nb}{mod}\PYG{p}{(}\PYG{n}{seed} \PYG{o}{*} \PYG{n}{a} \PYG{o}{+} \PYG{n}{b}\PYG{p}{,} \PYG{n}{M}\PYG{p}{);}
+
+  \PYG{n}{rnStep} \PYG{p}{=} \PYG{n}{seed} \PYG{o}{/} \PYG{n}{M}\PYG{p}{;}
+
+\PYG{k}{end}
+\end{Verbatim}
