@@ -36,9 +36,22 @@
 \begin{frame}[fragile]
   \frametitle{Linear congruential generators}
   	\begin{itemize}
-  	  \item $N_0$ is chosen arbitrarily
+  	  \item $N_0$ is chosen arbitrarily (called the \textit{seed})
   	  \item $N_i = (aN_{i-1} + b)\ \text{mod}\ M$ for $i > 0$
+  	  \item \[U_i = \frac{N_i}{M},\quad U_i \in \left[0,1\right)\]
+  	  \item Suitability of the numbers $U_i$ depends on how $a, b, M$ are chosen
   	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Linear congruential generators: properties}
+  \begin{itemize}
+    \item Numbers $N_i$ are periodic, with period $\leq M$: there are at most $M$ different numbers in the class modulo $M$
+    \item Example: if $N=0$, $b$ can't be $0$, otherwise $N_i = 0$ will repeat itself
+    \item Example: if $a=0$, generator settles down on $N_n = N_0 + nb$
+    \item Numbers are distributed ``evenly'' if we have exactly $M$ different numbers in a generator with modulo $M$, or
+    \item Each grid point on a \textit{mesh} on $\left[0,1\right]$ with \textit{mesh} size $\frac{1}{M}$ is occupied once
+  \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -80,6 +93,110 @@
   	\item Inversion and transformation methods generate numbers distributed according to
   	  an arbitrary distribution from uniformly distributed samples
   \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Box-Muller method}
+  \begin{itemize}
+  	\item Generate $x_1, x_2 \sim \mathcal{U}(0,1)$ random numbers
+  	\item Derive
+  	  \[ h_1(x_1, x_2) := y_1 = \sqrt{-2 \log x_1} \cos{2\pi x_2} \]
+  	  \[ h_2(x_1, x_2) := y_2 = \sqrt{-2 \log x_1} \sin{2\pi x_2} \] 
+	\item $y_1$ and $y_2$ will be i.i.d. $\sim \mathcal{N}(0,1)$
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Box-Muller method}
+  \begin{columns}[t]
+    \begin{column}{4cm}
+	  %\includegraphics[width=.8\textwidth]{Picture1.png}
+    \end{column}
+    \begin{column}{4cm}
+      \[ y_1 = D \cos \omega \quad y_2 = D \sin \omega \quad \]
+      \[ \text{where}\ D = \sqrt{-2 \log x_1} \quad \omega = 2\pi x_2 \]
+    \end{column}
+  \end{columns}
+
+  \bigskip
+  
+  \bigskip
+  
+  \[
+    h^{-1}(x_1,x_2) = \begin{cases}
+      x_1 = \exp{\left\{ -\frac{y_1^2 + y_2^2}{2} \right\}}       
+      \\
+      x_2 = \frac{1}{2\pi} \arctan \frac{y_2}{y_1}
+    \end{cases}
+  \]
+  \[
+  	|\text{Jacobian}| = \det \left(
+  	  \begin{matrix}
+  	    \frac{\partial x_1}{\partial y_1} & \frac{\partial x_1}{\partial y_2} \\
+  	    \frac{\partial x_2}{\partial y_1} & \frac{\partial x_2}{\partial y_2} 
+  	  \end{matrix}
+  	\right) = 
+  	\left[ 
+  	  \frac{1}{\sqrt{2\pi}} \exp{\left(-\frac{y_1^2}{2}\right)}
+  	\right]
+  	\cdot
+  	\left[
+  	  \frac{1}{\sqrt{2\pi}} \exp{\left(-\frac{y_2^2}{2}\right)} 
+  	\right]
+  \]
+  is the density of the bivariate standard normal distribution because it's the product of two univariate standard normal densities.
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Polar method}
+  \begin{enumerate}
+    \item Let $U_1, U_2 \sim \mathcal{U}(0,1)$
+    \item Define $V_i = 2U_i - 1$: $V_i \sim \mathcal{U}(-1,1)$
+    \item Define $S = V_1^2 + V_2^2$
+    \item If and only if $S \leq 1$, then define
+      \[ Y = \sqrt{\frac{-2\ln{S}}{S}} \]
+    \item \[
+        \left( \begin{matrix} X_1 \\ X_2 \end{matrix} \right) = \left( \begin{matrix} V_1 Y \\ V_2 Y \end{matrix} \right)
+        \quad \text{ and } \quad X_1,X_2\ \text{i.i.d.}\ \sim \mathcal{N}(0,1)
+      \]
+  \end{enumerate}  
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Polar method}
+  \includegraphics[width=\textwidth]{Picture2.png}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Correlated bivariate random variables}
+  \[
+    \mathbf{Z} = \left(\begin{matrix} z_1 \\ z_2 \end{matrix} \right), \quad z_1, z_2 \sim \mathcal{N}(0,1)
+    \quad
+    \mathbf{\mu} = \left(\begin{matrix} \mu_1 \\ \mu_2 \end{matrix} \right)
+    \quad
+    \Sigma = \left(\begin{matrix} \sigma_1^2 & \rho\sigma_1\sigma_2 \\ \rho\sigma_1\sigma_2 & \sigma_2^2 \end{matrix} \right)
+  \]
+  \begin{enumerate}
+    \item Calculate the Cholesky decomposition $AA^T = \Sigma$
+      \[
+        \left(\begin{matrix} a & 0 \\ b & c \end{matrix} \right)
+        \left(\begin{matrix} a & b \\ 0 & c \end{matrix} \right) =
+        \left(\begin{matrix} a^2 & ab \\ ab & b^2 + c^2 \end{matrix} \right)
+        = \left(\begin{matrix} \sigma_1^2 & \rho\sigma_1\sigma_2 \\ \rho\sigma_1\sigma_2 & \sigma_2^2 \end{matrix} \right)
+      \] \[
+        \rightarrow A = \left(\begin{matrix} \sigma_1 & 0 \\ \rho\sigma_2 & \sigma_2(1-\rho^2)^{\frac{1}{2}} \end{matrix} \right)
+      \]
+    \item Calculate $\mathbf{Z} \sim\mathcal{N}(0,\mathbb{I}_2)$
+    \item $\mu + A\mathbf{Z} \sim \mathcal{N}(\mu,\Sigma)$ has the desired distribution.
+      \[
+        \left( \begin{matrix}X \\ Y \end{matrix} \right) = 
+        \mu + %\left( \begin{matrix}\mu_1 \\ \mu_2 \end{matrix} \right) + 
+          \left(\begin{matrix} \sigma_1 & 0 \\ \rho\sigma_2 & \sigma_2(1-\rho^2)^{\frac{1}{2}} \end{matrix} \right)
+          \left(\begin{matrix} z_1 \\ z_2 \end{matrix} \right) =
+        \mu + % \left( \begin{matrix}\mu_1 \\ \mu_2 \end{matrix} \right) + 
+          \left(\begin{matrix} \sigma_1 z_1 \\ \rho\sigma_2z_1+\sigma_2(1-\rho^2)^\frac{1}{2}z_2 \end{matrix} \right)
+      \]
+  \end{enumerate}
 \end{frame}
 
 \begin{frame}[fragile]
