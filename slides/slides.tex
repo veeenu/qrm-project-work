@@ -1,12 +1,14 @@
-\documentclass[10pt, compress]{beamer}
+\documentclass[10pt, serif, mathserif]{beamer}
 
-\usetheme{m}
+\usetheme{metropolis}
 
 \usepackage{booktabs}
 \usepackage[scale=2]{ccicons}
-\usepackage{minted}
+\usepackage[outputdir=output]{minted}
 
 \usemintedstyle{pastie}
+
+\setmonofont{FiraMono-Regular.ttf}
 
 \title{Random number generation}
 \subtitle{Quantitative Risk Management project work}
@@ -20,48 +22,52 @@
 
 \maketitle
 
-\begin{frame}[fragile]
+\begin{frame}
   \frametitle{Random numbers}
   \begin{itemize}
-  	\item Computer-generated numbers are \textit{pseudo-random}: deterministic and predictable
-  	\item \textit{Quasi-random} numbers prevent potential lack of equidistributedness
-  	\item \textbf{Definition.} \textit{(sample)} a sequence of number is called a \textit{sample from the distribution $F$}
+  	\item Computer-generated numbers are \emph{pseudo-random}: \\ deterministic and predictable
+  	\item \emph{Quasi-random} numbers prevent potential lack of equidistributedness
+  	\item \textbf{Definition.} \emph{(Sample)}. A sequence of number is called a \emph{sample from the distribution $F$}
   	  if the numbers are independent realizations of a random variable with distribution function $F$
 	\item Uniform deviates: samples from $\sim \mathcal{U}  \left[ 0, 1 \right] $
 	\item Normal deviates: samples from $\sim \mathcal{N}  \left( 0, 1 \right) $
-	\item Drawing uniform deviates is the basis of random number generation
+	\item Drawing uniform deviates is the basis of \\ random number generation
   \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]
+\begin{frame}
   \frametitle{Linear congruential generators}
   	\begin{itemize}
-  	  \item $N_0$ is chosen arbitrarily (called the \textit{seed})
-  	  \item $N_i = (aN_{i-1} + b)\ \text{mod}\ M$ for $i > 0$
-  	  \item \[U_i = \frac{N_i}{M},\quad U_i \in \left[0,1\right)\]
+  	  \item $N_0$ is chosen arbitrarily (called the \emph{seed})
+  	  \item $N_i = (aN_{i-1} + b)\ \text{mod}\ M$ for $i > 0$, then
+  	    \\ \[U_i = \frac{N_i}{M},\quad U_i \in \left[0,1\right)\] 
+        \medskip
   	  \item Suitability of the numbers $U_i$ depends on how $a, b, M$ are chosen
   	\end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]
+\begin{frame}
   \frametitle{Linear congruential generators: properties}
   \begin{itemize}
-    \item Numbers $N_i$ are periodic, with period $\leq M$: there are at most $M$ different numbers in the class modulo $M$
-    \item Example: if $N=0$, $b$ can't be $0$, otherwise $N_i = 0$ will repeat itself
-    \item Example: if $a=0$, generator settles down on $N_n = N_0 + nb$
+    \item Numbers $N_i$ are periodic, with period $\leq M$: \\ there are at most $M$ different numbers in the class modulo $M$
+    \item Examples:
+      \begin{itemize}
+        \item If $N=0$, $b$ can't be $0$, otherwise $N_i = 0$ will repeat itself
+        \item If $a=0$, generator settles down on $N_n = N_0 + nb$
+      \end{itemize}
     \item Numbers are distributed ``evenly'' if we have exactly $M$ different numbers in a generator with modulo $M$, or
-    \item Each grid point on a \textit{mesh} on $\left[0,1\right]$ with \textit{mesh} size $\frac{1}{M}$ is occupied once
+    \item Each grid point on a \emph{mesh} on $\left[0,1\right]$ with size $\frac{1}{M}$ is occupied once
   \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]
+\begin{frame}
   \frametitle{Quality of generators}
   Requirements:
   \begin{enumerate}
   	\item Large period: small set of numbers makes the outcome easier to predict (choose M as large as possible)
   	\item Statistical tests to verify that the distribution is the intended one
   	  \begin{itemize}
-  	  	\item Comparison of sample mean and variance $\mu,\ \sigma^2$ with desired values
+  	  	\item Comparison of sample mean and variance $\mu,\ \sigma^2$ \\ with desired values
   	  	\item Correlation between sample values
   	  	\item Quality of approximation of the distribution
   	  \end{itemize}
@@ -69,12 +75,12 @@
   \end{enumerate}
 \end{frame}
 
-\begin{frame}[fragile]
+\begin{frame}
   \frametitle{Random vectors and lattice structure}
   \begin{itemize}
-  	\item Sequences of random numbers can be arranged in $m$-dimensional vectors
-  	\item The vectors lie on a number of parallel $(m-1)$-dimensional hyperplanes
-  	\item The ideal condition is that the number of parallel hyperplanes is maximized:
+  	\item Sequences of random numbers can be arranged in \\ $m$-dimensional vectors
+  	\item The vectors lie on a number of parallel \\ $(m-1)$-dimensional hyperplanes
+  	\item The ideal condition is that the number of parallel \\ hyperplanes is maximized:
   	  number of hyperplanes is a measure of equidistributedness
   	\item Family of parallel lines in the $(U_{i-1},U_i)$-plane \[
   		z_0 U_{i-1} +z_1 U_i = c + \frac{z_1 b}{M} \quad \text{where} \quad c := N_{i-1}\frac{z_0 + az_1}{M} - z_1 k
@@ -82,12 +88,12 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]
+\begin{frame}
   \frametitle{Random vectors and lattice structure}
   immagini qui
 \end{frame}
 
-\begin{frame}[fragile]
+\begin{frame}
   \frametitle{Inversion and transformation methods}
   \begin{itemize}
   	\item Inversion and transformation methods generate numbers distributed according to
@@ -95,7 +101,62 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]
+\begin{frame}
+  \frametitle{Inversion method}
+  \textbf{Theomem.} \emph{(inversion)} Suppose $U \sim\mathcal{U}[0,1]$, and $F$ continuous strictly increasing distribution. Then,
+    $F^{-1}(U)$ is a sample from $F$.
+
+  \textbf{Proof.} \[ \mathbb{P}(U \leq \xi) = \xi,\ 0 < \xi < 1 \] 
+  \[ \mathbb{P}(F^{-1}(U)\leq x) = \mathbb{P}(U \leq F(x)) = F(x).$\]
+  \begin{columns}[t]
+    \begin{column}{5cm}
+      \centering \emph{Exponential distribution:}
+      \[ F(x) = 1 - e^{-\lambda x}\]
+      \[ F^{-1}(x) = \frac{1}{\lambda} \log(x)\]
+    \end{column}
+
+    \begin{column}{5cm}
+      \centering \emph{Cauchy distribution:}
+      \[ F(x) = \frac{1}{\pi} \arctan(x) + \frac{1}{2} \]
+      \[ F^{-1}(x) = \tan\left(\pi\left(x - \frac{1}{2}\right)\right)\]
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Transformation method}
+  \textbf{Theomem.} If $X$ is a \emph{r.v.} $\sim F(x)$, and $h : S \to B,\ S,B\cup \mathbb{R}$ strictly monotonous, then:
+  \medskip
+  \begin{columns}[t]
+    \begin{column}{5cm}
+      $Y := h(X)$ is a \emph{r.v.} with distribution
+      \begin{align*} 
+        F_Y(y) = F(h^{-1}(y)) & h' > 0 \\
+        F_Y(y) = F(h^{-1}(y)) & h' > 0 
+      \end{align}
+    \end{column}
+    \begin{column}{5cm}
+      If $h^{-1}$ absolutely continuous for almost all $y$, density of $h$ is
+      \[
+        f(h^{-1}(y)) \left| \frac{dh^{-1}(y)}{dy}\right|
+      \]
+    \end{column}
+  \end{columns}
+
+  \bigskip
+  
+  \begin{columns}[t]
+    \begin{column}{5cm}
+      \centering \emph{Exponential distribution:}
+    \end{column}
+
+    \begin{column}{5cm}
+      \centering \emph{Cauchy distribution:}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}
   \frametitle{Box-Muller method}
   \begin{itemize}
   	\item Generate $x_1, x_2 \sim \mathcal{U}(0,1)$ random numbers
@@ -106,15 +167,19 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]
+\begin{frame}
   \frametitle{Box-Muller method}
-  \begin{columns}[t]
-    \begin{column}{4cm}
-	  %\includegraphics[width=.8\textwidth]{Picture1.png}
+  \begin{columns}
+    \begin{column}{3cm}
+      \begin{figure}
+        \centering
+        \includegraphics[width=3cm]{Picture1.png}
+      \end{figure}
     \end{column}
-    \begin{column}{4cm}
-      \[ y_1 = D \cos \omega \quad y_2 = D \sin \omega \quad \]
-      \[ \text{where}\ D = \sqrt{-2 \log x_1} \quad \omega = 2\pi x_2 \]
+
+    \begin{column}{5cm}
+      \[ y_1 = D \cos \omega, \quad y_2 = D \sin \omega \quad \]
+      \[ \text{where}\ D = \sqrt{-2 \log x_1}, \quad \omega = 2\pi x_2 \]
     \end{column}
   \end{columns}
 
@@ -147,7 +212,7 @@
   is the density of the bivariate standard normal distribution because it's the product of two univariate standard normal densities.
 \end{frame}
 
-\begin{frame}[fragile]
+\begin{frame}
   \frametitle{Polar method}
   \begin{enumerate}
     \item Let $U_1, U_2 \sim \mathcal{U}(0,1)$
@@ -162,12 +227,12 @@
   \end{enumerate}  
 \end{frame}
 
-\begin{frame}[fragile]
+\begin{frame}
   \frametitle{Polar method}
   \includegraphics[width=\textwidth]{Picture2.png}
 \end{frame}
 
-\begin{frame}[fragile]
+\begin{frame}
   \frametitle{Correlated bivariate random variables}
   \[
     \mathbf{Z} = \left(\begin{matrix} z_1 \\ z_2 \end{matrix} \right), \quad z_1, z_2 \sim \mathcal{N}(0,1)
@@ -199,95 +264,29 @@
   \end{enumerate}
 \end{frame}
 
-\begin{frame}[fragile]
+\begin{frame}
 	\frametitle{Implementations - Linear Congruential Generator}
 	\begin{columns}[t]
 		\begin{column}{5cm}
-	
-			\begin{minted}[fontsize=\small,linenos]{matlab}
-function [ rn ] = LCG( x ) 
-
-  if(nargin == 0)
-    x = 1;
-  end
-  
-  rn = zeros(x,1);
-  
-  for i = 1:x
-    rn(i) = LCGstep();
-  end
-
-end
-			\end{minted}
+      \inputminted[fontsize=\small,linenos]{matlab}{matlab/lcg.m}
 		\end{column}
 		\begin{column}{5cm}
-			\begin{minted}[fontsize=\small,linenos,firstnumber=14]{matlab}
-function [ rnStep ] = LCGstep()
-
-  persistent seed;
-  M = 244944;
-  a = 1597;
-  b = 51749;
-  
-  if(isempty(seed))
-    seed = 0;
-  end
-  
-  seed = mod(seed * a + b, M);
-  
-  rnStep = seed / M;
-
-end
-			\end{minted}
+      \inputminted[fontsize=\small,linenos,firstnumber=14]{matlab}{matlab/lcgstep.m}
 		\end{column}
 	\end{columns}
 \end{frame}
 
-\begin{frame}[fragile]
+\begin{frame}
 	\frametitle{Implementations - Box-Muller method}
-	\begin{minted}[fontsize=\small,linenos]{matlab}
-function [ Z ] = BoxMuller( x )
-
-  if(nargin == 0)
-    x = 1;
-  end
-
-  U = rand(x, 2);
-  
-  theta = 2 .* pi .* U(:, 2);
-  rho   = sqrt( -2 .* log( U(:, 1) ) );
-  
-  Z = [ rho .* cos(theta), rho .* sin(theta) ];
-
-end
-	\end{minted}
+  \inputminted[fontsize=\small,linenos]{matlab}{matlab/boxmuller.m}
 \end{frame}
 
-\begin{frame}[fragile]
+\begin{frame}
 	\frametitle{Implementations - Marsaglia polar algorithm}
-	\begin{minted}[fontsize=\small,linenos]{matlab}
-function [ Z ] = Marsaglia( x )
-
-  if(nargin == 0)
-    x = 1;
-  end
-
-  Z = zeros(x,2);
-  
-  for i = 1 : x
-    W = 1;  V = [ 1, 1 ];
-    while not (W < 1)
-      V = 2 * rand(1, 2) - 1;
-      W = V(1) .^ 2 + V(2) .^ 2;
-    end
-    
-    Z(i, :) = V .* sqrt(-2 * log(W) / W);
-  end
-end
-	\end{minted}
+  \inputminted[fontsize=\small,linenos]{matlab}{matlab/marsaglia.m}
 \end{frame}
 
-\begin{frame}[fragile]
+\begin{frame}
 	\frametitle{Plots - Univariate methods}
 	\includegraphics[width=\textwidth, trim=70mm 80mm 70mm 20mm]{../univariate.eps}
 \end{frame}
