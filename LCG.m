@@ -23,9 +23,9 @@ function [ rnStep ] = LCGstep()
     seed = 0;
   end
   
-  seed = mod(seed * a + b, M);
+  seed = mod(seed .* a + b, M);
   
-  rnStep = seed / M;
+  rnStep = seed ./ M;
 
 end
 

@@ -8,7 +8,7 @@
 
 \usemintedstyle{pastie}
 
-\setmonofont{FiraMono-Regular.ttf}
+%\setmonofont{FiraMono-Regular.ttf}
 
 \title{Random number generation}
 \subtitle{Quantitative Risk Management project work}
@@ -90,20 +90,27 @@
 
 \begin{frame}
   \frametitle{Random vectors and lattice structure}
-  immagini qui
+  \begin{columns}
+    \begin{column}{.5\textwidth}
+      \centering \includegraphics[width=\textwidth]{images/claudia2.png}
+    \end{column}
+    \begin{column}{.5\textwidth}
+      \centering \includegraphics[width=\textwidth]{images/claudia3.png}
+    \end{column}
+  \end{columns}
 \end{frame}
 
 \begin{frame}
   \frametitle{Inversion and transformation methods}
   \begin{itemize}
-  	\item Inversion and transformation methods generate numbers distributed according to
-  	  an arbitrary distribution from uniformly distributed samples
+  	Inversion and transformation methods generate numbers distributed according to
+  	an arbitrary distribution from uniformly distributed samples.
   \end{itemize}
 \end{frame}
 
 \begin{frame}
   \frametitle{Inversion method}
-  \textbf{Theomem.} \emph{(inversion)} Suppose $U \sim\mathcal{U}[0,1]$, and $F$ continuous strictly increasing distribution. Then,
+  \textbf{Theorem.} \emph{(inversion)} Suppose $U \sim\mathcal{U}[0,1]$, and $F$ continuous strictly increasing distribution. Then,
     $F^{-1}(U)$ is a sample from $F$.
 
   \textbf{Proof.} \[ \mathbb{P}(U \leq \xi) = \xi,\ 0 < \xi < 1 \] 
@@ -112,7 +119,7 @@
     \begin{column}{5cm}
       \centering \emph{Exponential distribution:}
       \[ F(x) = 1 - e^{-\lambda x}\]
-      \[ F^{-1}(x) = \frac{1}{\lambda} \log(x)\]
+      \[ F^{-1}(x) = -\frac{1}{\lambda} \log(x)\]
     \end{column}
 
     \begin{column}{5cm}
@@ -125,7 +132,7 @@
 
 \begin{frame}
   \frametitle{Transformation method}
-  \textbf{Theomem.} If $X$ is a \emph{r.v.} $\sim F(x)$, and $h : S \to B,\ S,B\cup \mathbb{R}$ strictly monotonous, then:
+  \textbf{Theorem.} If $X$ is a \emph{r.v.} $\sim F(x)$, and $h : S \to B,\ S,B\cup \mathbb{R}$ strictly monotonous, then:
   \medskip
   \begin{columns}[t]
     \begin{column}{5cm}
@@ -133,7 +140,7 @@
       \begin{align*} 
         F_Y(y) = F(h^{-1}(y)) & h' > 0 \\
         F_Y(y) = F(h^{-1}(y)) & h' > 0 
-      \end{align}
+      \end{align*}
     \end{column}
     \begin{column}{5cm}
       If $h^{-1}$ absolutely continuous for almost all $y$, density of $h$ is
@@ -142,6 +149,8 @@
       \]
     \end{column}
   \end{columns}
+
+  \bigskip
 
   \bigskip
   
@@ -173,7 +182,7 @@
     \begin{column}{3cm}
       \begin{figure}
         \centering
-        \includegraphics[width=3cm]{Picture1.png}
+        \includegraphics[width=3.5cm,trim=10mm 10mm 10mm 10mm]{images/Picture1.png}
       \end{figure}
     \end{column}
 
@@ -182,8 +191,6 @@
       \[ \text{where}\ D = \sqrt{-2 \log x_1}, \quad \omega = 2\pi x_2 \]
     \end{column}
   \end{columns}
-
-  \bigskip
   
   \bigskip
   
@@ -214,6 +221,11 @@
 
 \begin{frame}
   \frametitle{Polar method}
+  \begin{tikzpicture}[remember picture,overlay]
+    \node at (9.35cm, -1.6cm) {
+      \includegraphics[width=.4\textwidth]{images/Picture2.png}
+    }
+  \end{tikzpicture}
   \begin{enumerate}
     \item Let $U_1, U_2 \sim \mathcal{U}(0,1)$
     \item Define $V_i = 2U_i - 1$: $V_i \sim \mathcal{U}(-1,1)$
@@ -225,19 +237,15 @@
         \quad \text{ and } \quad X_1,X_2\ \text{i.i.d.}\ \sim \mathcal{N}(0,1)
       \]
   \end{enumerate}  
-\end{frame}
 
-\begin{frame}
-  \frametitle{Polar method}
-  \includegraphics[width=\textwidth]{Picture2.png}
 \end{frame}
 
 \begin{frame}
   \frametitle{Correlated bivariate random variables}
   \[
-    \mathbf{Z} = \left(\begin{matrix} z_1 \\ z_2 \end{matrix} \right), \quad z_1, z_2 \sim \mathcal{N}(0,1)
+    \bar{Z} = \left(\begin{matrix} z_1 \\ z_2 \end{matrix} \right), \ z_1, z_2 \sim \mathcal{N}(0,1)
     \quad
-    \mathbf{\mu} = \left(\begin{matrix} \mu_1 \\ \mu_2 \end{matrix} \right)
+    \bar{\mu} = \left(\begin{matrix} \mu_1 \\ \mu_2 \end{matrix} \right)
     \quad
     \Sigma = \left(\begin{matrix} \sigma_1^2 & \rho\sigma_1\sigma_2 \\ \rho\sigma_1\sigma_2 & \sigma_2^2 \end{matrix} \right)
   \]
@@ -251,14 +259,15 @@
       \] \[
         \rightarrow A = \left(\begin{matrix} \sigma_1 & 0 \\ \rho\sigma_2 & \sigma_2(1-\rho^2)^{\frac{1}{2}} \end{matrix} \right)
       \]
-    \item Calculate $\mathbf{Z} \sim\mathcal{N}(0,\mathbb{I}_2)$
-    \item $\mu + A\mathbf{Z} \sim \mathcal{N}(\mu,\Sigma)$ has the desired distribution.
+    \item Calculate $\bar{Z} \sim\mathcal{N}(0,\mathbb{I}_2)$
+    \item $\mu + A\bar{Z} \sim \mathcal{N}(\mu,\Sigma)$ has the desired distribution.
       \[
         \left( \begin{matrix}X \\ Y \end{matrix} \right) = 
-        \mu + %\left( \begin{matrix}\mu_1 \\ \mu_2 \end{matrix} \right) + 
+        \bar{\mu} + %\left( \begin{matrix}\mu_1 \\ \mu_2 \end{matrix} \right) + 
           \left(\begin{matrix} \sigma_1 & 0 \\ \rho\sigma_2 & \sigma_2(1-\rho^2)^{\frac{1}{2}} \end{matrix} \right)
-          \left(\begin{matrix} z_1 \\ z_2 \end{matrix} \right) =
-        \mu + % \left( \begin{matrix}\mu_1 \\ \mu_2 \end{matrix} \right) + 
+          \bar{Z} = 
+          %\left(\begin{matrix} z_1 \\ z_2 \end{matrix} \right) =
+        \bar{\mu} + % \left( \begin{matrix}\mu_1 \\ \mu_2 \end{matrix} \right) + 
           \left(\begin{matrix} \sigma_1 z_1 \\ \rho\sigma_2z_1+\sigma_2(1-\rho^2)^\frac{1}{2}z_2 \end{matrix} \right)
       \]
   \end{enumerate}
@@ -268,32 +277,50 @@
 	\frametitle{Implementations - Linear Congruential Generator}
 	\begin{columns}[t]
 		\begin{column}{5cm}
-      \inputminted[fontsize=\small,linenos]{matlab}{matlab/lcg.m}
+      \inputminted[fontsize=\small,linenos]{matlab}{matlab/LCG.m}
 		\end{column}
 		\begin{column}{5cm}
-      \inputminted[fontsize=\small,linenos,firstnumber=14]{matlab}{matlab/lcgstep.m}
+      \inputminted[fontsize=\small,linenos,firstnumber=14]{matlab}{matlab/LCGstep.m}
 		\end{column}
 	\end{columns}
 \end{frame}
 
 \begin{frame}
 	\frametitle{Implementations - Box-Muller method}
-  \inputminted[fontsize=\small,linenos]{matlab}{matlab/boxmuller.m}
+  \inputminted[fontsize=\small,linenos]{matlab}{matlab/BoxMuller.m}
 \end{frame}
 
 \begin{frame}
 	\frametitle{Implementations - Marsaglia polar algorithm}
-  \inputminted[fontsize=\small,linenos]{matlab}{matlab/marsaglia.m}
+  \inputminted[fontsize=\small,linenos]{matlab}{matlab/Marsaglia.m}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Implementations - Correlated r.v. algorithm}
+  \inputminted[fontsize=\small,linenos]{matlab}{matlab/CorrelatedRV.m}
 \end{frame}
 
 \begin{frame}
 	\frametitle{Plots - Univariate methods}
-	\includegraphics[width=\textwidth, trim=70mm 80mm 70mm 20mm]{../univariate.eps}
+	\centering \includegraphics[width=.9\textwidth, trim=100mm 100mm 70mm 70mm]{../univariate.eps}
 \end{frame}
 
-\begin{frame}[fragile]
+\begin{frame}
 	\frametitle{Plots - Bivariate methods}
-	\includegraphics[width=\textwidth, trim=70mm 80mm 70mm 20mm]{../bivariate.eps}
+	\centering \includegraphics[width=.9\textwidth, trim=100mm 100mm 70mm 70mm]{../bivariate.eps}
+	%\centering \includegraphics[width=.9\textwidth, trim=80mm 70mm 100mm 30mm]{../bivariate.eps}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Plots - Correlated normal r.v.}
+	\centering \includegraphics[width=.9\textwidth, trim=100mm 100mm 70mm 70mm]{../correlated.eps}
+	%\centering \includegraphics[width=.9\textwidth, trim=80mm 70mm 100mm 30mm]{../correlated.eps}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Plots - Inversion method on Exponential and Cauchy}
+	\centering \includegraphics[width=.9\textwidth, trim=100mm 100mm 70mm 70mm]{../inversion.eps}
+	%\centering \includegraphics[width=.9\textwidth, trim=80mm 70mm 100mm 30mm]{../inversion.eps}
 \end{frame}
 
 \end{document}
