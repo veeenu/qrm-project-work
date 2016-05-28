@@ -138,8 +138,8 @@
     \begin{column}{5cm}
       $Y := h(X)$ is a \emph{r.v.} with distribution
       \begin{align*} 
-        F_Y(y) = F(h^{-1}(y)) & h' > 0 \\
-        F_Y(y) = F(h^{-1}(y)) & h' > 0 
+        F_Y(y) = F(h^{-1}(y)) & \quad h' > 0 \\
+        F_Y(y) = 1 - F(h^{-1}(y)) & \quad h' < 0 
       \end{align*}
     \end{column}
     \begin{column}{5cm}
@@ -149,20 +149,29 @@
       \]
     \end{column}
   \end{columns}
+\end{frame}
 
-  \bigskip
-
-  \bigskip
-  
-  \begin{columns}[t]
-    \begin{column}{5cm}
-      \centering \emph{Exponential distribution:}
-    \end{column}
-
-    \begin{column}{5cm}
-      \centering \emph{Cauchy distribution:}
-    \end{column}
-  \end{columns}
+\begin{frame}
+  \frametitle{Transformation method: Exponential distribution}
+  \begin{align*}
+    F(x) &= 1-e^{-\lambda y} \\
+    F^{-1}(y) &= \frac{\ln(y - 1)}{\lambda} \\
+    F^{-1}(U) &= h(U) = \frac{\ln(U)}{\lambda} \\
+    h^{-1}(U) &= e^{-\lambda U} \\
+    F(h^{-1}(U)) \left| \frac{dh^{-1}(y)}{dy}\right| &= 1\cdot\left|-\lambda e^{-\lambda y}\right| \\
+                                                     &= \lambda e^{-\lambda y}
+  \end{align*}
+\end{frame}
+\begin{frame}
+  \frametitle{Transformation method: Cauchy distribution}
+  \begin{align*}
+    F(x) &= \frac{1}{\pi} \arctan(x)+\frac{1}{2} \\
+    F^{-1}(y) &= \tan\left(\pi\left(y - \frac{1}{2}\right)\right) \\
+    F^{-1}(U) &= h(U) = \tan(\pi U) \\
+    h^{-1}(U) &= \frac{\arctan(U)}{\pi} \\
+    F(h^{-1}(U)) \left|\frac{dh^{-1}(y)}{dy}\right| &= 1\cdot\left|\frac{1}{\pi(1+x^2)}\right| \\
+                                                    &= \frac{1}{\pi(1+x^2)}
+  \end{align*}
 \end{frame}
 
 \begin{frame}
