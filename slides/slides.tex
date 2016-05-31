@@ -3,6 +3,7 @@
 \usetheme{metropolis}
 
 \usepackage{booktabs}
+\usepackage{graphicx}
 \usepackage[scale=2]{ccicons}
 \usepackage[outputdir=output]{minted}
 
@@ -90,14 +91,13 @@
 
 \begin{frame}
   \frametitle{Random vectors and lattice structure}
-  \begin{columns}
-    \begin{column}{.5\textwidth}
-      \centering \includegraphics[width=\textwidth]{images/claudia2.png}
-    \end{column}
-    \begin{column}{.5\textwidth}
-      \centering \includegraphics[width=\textwidth]{images/claudia3.png}
-    \end{column}
-  \end{columns}
+  \vspace{1.5cm}
+  \centering\includegraphics[width=.9\textwidth,trim=60mm 60mm 60mm 60mm]{../lcg.eps}
+
+  \vspace{1cm}
+  \emph{\scriptsize Two instances of linear congruential generator with different parameters. In the left case,
+  there are only few parallel lines, making evident the lattice structure. In the right case,
+  the high number of parallel lines conceals the lattice structure, giving a "more random" appearance.}
 \end{frame}
 
 \begin{frame}
