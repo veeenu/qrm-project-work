@@ -113,8 +113,10 @@
   \textbf{Theorem.} \emph{(inversion)} Suppose $U \sim\mathcal{U}[0,1]$, and $F$ continuous strictly increasing distribution. Then,
     $F^{-1}(U)$ is a sample from $F$.
 
-  \textbf{Proof.} \[ \mathbb{P}(U \leq \xi) = \xi,\ 0 < \xi < 1 \] 
-  \[ \mathbb{P}(F^{-1}(U)\leq x) = \mathbb{P}(U \leq F(x)) = F(x).$\]
+  \textbf{Proof.} \begin{gather*} 
+    \mathbb{P}(U \leq \xi) = \xi,\ 0 < \xi < 1 \\
+    \mathbb{P}(F^{-1}(U)\leq x) = \mathbb{P}(U \leq F(x)) = F(x).
+  \end{gather*}
   \begin{columns}[t]
     \begin{column}{5cm}
       \centering \emph{Exponential distribution:}
@@ -134,21 +136,17 @@
   \frametitle{Transformation method}
   \textbf{Theorem.} If $X$ is a \emph{r.v.} $\sim F(x)$, and $h : S \to B,\ S,B\cup \mathbb{R}$ strictly monotonous, then:
   \medskip
-  \begin{columns}[t]
-    \begin{column}{5cm}
-      $Y := h(X)$ is a \emph{r.v.} with distribution
+  \begin{itemize}
+    \item $Y := h(X)$ is a \emph{r.v.} with distribution
       \begin{align*} 
         F_Y(y) = F(h^{-1}(y)) & \quad h' > 0 \\
         F_Y(y) = 1 - F(h^{-1}(y)) & \quad h' < 0 
       \end{align*}
-    \end{column}
-    \begin{column}{5cm}
-      If $h^{-1}$ absolutely continuous for almost all $y$, density of $h$ is
+    \item If $h^{-1}$ absolutely continuous for almost all $y$, density of $h$ is
       \[
         f(h^{-1}(y)) \left| \frac{dh^{-1}(y)}{dy}\right|
       \]
-    \end{column}
-  \end{columns}
+  \end{itemize}
 \end{frame}
 
 \begin{frame}
@@ -157,9 +155,11 @@
     F(x) &= 1-e^{-\lambda y} \\
     F^{-1}(y) &= \frac{\ln(y - 1)}{\lambda} \\
     F^{-1}(U) &= h(U) = \frac{\ln(U)}{\lambda} \\
-    h^{-1}(U) &= e^{-\lambda U} \\
-    F(h^{-1}(U)) \left| \frac{dh^{-1}(y)}{dy}\right| &= 1\cdot\left|-\lambda e^{-\lambda y}\right| \\
-                                                     &= \lambda e^{-\lambda y}
+    h^{-1}(U) &= e^{-\lambda U}
+  \end{align*} 
+  \begin{align*}
+    f(h^{-1}(U)) \left| \frac{dh^{-1}(y)}{dy}\right| = 1\cdot\left|-\lambda e^{-\lambda y}\right| 
+                                                     = \lambda e^{-\lambda y}
   \end{align*}
 \end{frame}
 \begin{frame}
@@ -168,9 +168,11 @@
     F(x) &= \frac{1}{\pi} \arctan(x)+\frac{1}{2} \\
     F^{-1}(y) &= \tan\left(\pi\left(y - \frac{1}{2}\right)\right) \\
     F^{-1}(U) &= h(U) = \tan(\pi U) \\
-    h^{-1}(U) &= \frac{\arctan(U)}{\pi} \\
-    F(h^{-1}(U)) \left|\frac{dh^{-1}(y)}{dy}\right| &= 1\cdot\left|\frac{1}{\pi(1+x^2)}\right| \\
-                                                    &= \frac{1}{\pi(1+x^2)}
+    h^{-1}(U) &= \frac{\arctan(U)}{\pi}
+  \end{align*} 
+  \begin{align*}
+    f(h^{-1}(U)) \left|\frac{dh^{-1}(y)}{dy}\right| = 1\cdot\left|\frac{1}{\pi(1+x^2)}\right|
+                                                    = \frac{1}{\pi(1+x^2)}
   \end{align*}
 \end{frame}
 
@@ -198,11 +200,7 @@
     \begin{column}{5cm}
       \[ y_1 = D \cos \omega, \quad y_2 = D \sin \omega \quad \]
       \[ \text{where}\ D = \sqrt{-2 \log x_1}, \quad \omega = 2\pi x_2 \]
-    \end{column}
-  \end{columns}
-  
-  \bigskip
-  
+      \medskip
   \[
     h^{-1}(x_1,x_2) = \begin{cases}
       x_1 = \exp{\left\{ -\frac{y_1^2 + y_2^2}{2} \right\}}       
@@ -210,6 +208,11 @@
       x_2 = \frac{1}{2\pi} \arctan \frac{y_2}{y_1}
     \end{cases}
   \]
+    \end{column}
+  \end{columns}
+  
+  \bigskip
+  
   \[
   	|\text{Jacobian}| = \det \left(
   	  \begin{matrix}
@@ -231,22 +234,51 @@
 \begin{frame}
   \frametitle{Polar method}
   \begin{tikzpicture}[remember picture,overlay]
-    \node at (9.35cm, -1.6cm) {
-      \includegraphics[width=.4\textwidth]{images/Picture2.png}
+    \node at (9.00cm, -1.3cm) {
+      \includegraphics[width=.325\textwidth]{images/Picture2.png}
     }
   \end{tikzpicture}
-  \begin{enumerate}
-    \item Let $U_1, U_2 \sim \mathcal{U}(0,1)$
-    \item Define $V_i = 2U_i - 1$: $V_i \sim \mathcal{U}(-1,1)$
-    \item Define $S = V_1^2 + V_2^2$
-    \item If and only if $S \leq 1$, then define
-      \[ Y = \sqrt{\frac{-2\ln{S}}{S}} \]
-    \item \[
-        \left( \begin{matrix} X_1 \\ X_2 \end{matrix} \right) = \left( \begin{matrix} V_1 Y \\ V_2 Y \end{matrix} \right)
-        \quad \text{ and } \quad X_1,X_2\ \text{i.i.d.}\ \sim \mathcal{N}(0,1)
-      \]
-  \end{enumerate}  
+  \begin{columns}[t]
+    \begin{column}{.6\textwidth}
+      \begin{enumerate}
+        \item Let $U_1, U_2 \sim \mathcal{U}(0,1)$
+        \item Define $V_i = 2U_i - 1$: $V_i \sim \mathcal{U}(-1,1)$
+        \item Define $S = V_1^2 + V_2^2$
+        \item If and only if $S \leq 1$, then define
+          \[ Y = \sqrt{\frac{-2\ln{S}}{S}} \]
+        \item 
+          $ \left( \begin{matrix} X_1 \\ X_2 \end{matrix} \right) = \left( \begin{matrix} V_1 Y \\ V_2 Y \end{matrix} \right),$
+          \medskip
 
+          $ X_1,X_2\ \text{i.i.d.}\ \sim \mathcal{N}(0,1)$
+      \end{enumerate}  
+    \end{column}
+    \begin{column}{.4\textwidth}
+      \bigskip
+      \bigskip
+      \bigskip
+      \bigskip
+      \bigskip
+      \begin{align*}
+        x_2 &= \frac{1}{2\pi}\arg(V_1,V_2) \\&= \frac{1}{2\pi}\arctan\left(\frac{V_2}{V_1}\right) 
+      \end{align*}
+      \begin{align*}
+        \cos 2\pi x_2 &= \frac{V_1}{\sqrt{V_1^2+V_2^2}} \\
+        \sin 2\pi x_2 &= \frac{V_2}{\sqrt{V_1^2+V_2^2}}
+      \end{align*}
+    \end{column}
+  \end{columns}
+  %\begin{enumerate}
+  %  \item Let $U_1, U_2 \sim \mathcal{U}(0,1)$
+  %  \item Define $V_i = 2U_i - 1$: $V_i \sim \mathcal{U}(-1,1)$
+  %  \item Define $S = V_1^2 + V_2^2$
+  %  \item If and only if $S \leq 1$, then define
+  %    \[ Y = \sqrt{\frac{-2\ln{S}}{S}} \]
+  %  \item \[
+  %      \left( \begin{matrix} X_1 \\ X_2 \end{matrix} \right) = \left( \begin{matrix} V_1 Y \\ V_2 Y \end{matrix} \right)
+  %      \quad \text{ and } \quad X_1,X_2\ \text{i.i.d.}\ \sim \mathcal{N}(0,1)
+  %    \]
+  %\end{enumerate}  
 \end{frame}
 
 \begin{frame}
@@ -317,19 +349,30 @@
 \begin{frame}
 	\frametitle{Plots - Bivariate methods}
 	\centering \includegraphics[width=.9\textwidth, trim=100mm 100mm 70mm 70mm]{../bivariate.eps}
-	%\centering \includegraphics[width=.9\textwidth, trim=80mm 70mm 100mm 30mm]{../bivariate.eps}
 \end{frame}
 
 \begin{frame}
 	\frametitle{Plots - Correlated normal r.v.}
 	\centering \includegraphics[width=.9\textwidth, trim=100mm 100mm 70mm 70mm]{../correlated.eps}
-	%\centering \includegraphics[width=.9\textwidth, trim=80mm 70mm 100mm 30mm]{../correlated.eps}
 \end{frame}
 
 \begin{frame}
 	\frametitle{Plots - Inversion method on Exponential and Cauchy}
 	\centering \includegraphics[width=.9\textwidth, trim=100mm 100mm 70mm 70mm]{../inversion.eps}
-	%\centering \includegraphics[width=.9\textwidth, trim=80mm 70mm 100mm 30mm]{../inversion.eps}
 \end{frame}
 
+\begin{frame}
+  \begin{tikzpicture}[remember picture,overlay]%
+    \node at (1.80cm, -3.5cm) {%
+      \includegraphics[width=.6\textwidth]{../ty-plot.eps}%
+    }%
+  \end{tikzpicture}%
+  \raisebox{4ex}{\begin{columns}[t]
+    \begin{column}{.4\textwidth}
+    \end{column}
+    \begin{column}{.6\textwidth}
+      \inputminted[fontsize=\tiny]{matlab}{matlab/tyZipped.m}
+    \end{column}
+  \end{columns}}
+\end{frame}
 \end{document}
