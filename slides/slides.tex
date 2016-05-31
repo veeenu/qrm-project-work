@@ -121,13 +121,13 @@
     \begin{column}{5cm}
       \centering \emph{Exponential distribution:}
       \[ F(x) = 1 - e^{-\lambda x}\]
-      \[ F^{-1}(x) = -\frac{1}{\lambda} \log(x)\]
+      \[ F^{-1}(y) = -\frac{1}{\lambda} \log(y)\]
     \end{column}
 
     \begin{column}{5cm}
       \centering \emph{Cauchy distribution:}
       \[ F(x) = \frac{1}{\pi} \arctan(x) + \frac{1}{2} \]
-      \[ F^{-1}(x) = \tan\left(\pi\left(x - \frac{1}{2}\right)\right)\]
+      \[ F^{-1}(y) = \tan\left(\pi\left(y - \frac{1}{2}\right)\right)\]
     \end{column}
   \end{columns}
 \end{frame}
@@ -214,7 +214,7 @@
   \bigskip
   
   \[
-  	|\text{Jacobian}| = \det \left(
+    \left|\text{Jacobian}\right| = \det \left(
   	  \begin{matrix}
   	    \frac{\partial x_1}{\partial y_1} & \frac{\partial x_1}{\partial y_2} \\
   	    \frac{\partial x_2}{\partial y_1} & \frac{\partial x_2}{\partial y_2} 
